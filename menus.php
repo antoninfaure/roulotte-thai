@@ -5,12 +5,26 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=480" />
     <title>Hong Thaï Rung - Admin</title>
+    <!-- JQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+<!-- Bootstrap -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
 </head>
-
+<?php
+  // Initialiser la session
+  session_start();
+  // Vérifiez si l'utilisateur est connecté, sinon redirigez-le vers la page de connexion
+  if(!isset($_SESSION["username"])){
+    header("Location: login.php");
+    exit(); 
+  }
+?>
 <body>
-    <center>
-        <FONT face="helvetica">
-
+<a id="logout-btn" class="btn btn-danger m-3" href="logout.php">Logout</a>
+    <div class="col-12 m-0 py-5 px-2 px-md-5 text-center">
             <?php
             // Nos options définies dans un tableau (plus facile à coder et à maintenir)
             // Ouverture du fichier en lecture seule
@@ -63,10 +77,10 @@
             }
 
             ?>
-
             Sélectionner les menus du jour
-            <form method="POST">
-                <select name="menus[]" size="20" multiple>
+            <div class="d-flex">
+            <form class="mx-auto" method="POST">
+                <select class="form-control" name="menus[]" size="20" multiple>
                     <?php
                     $i = 0;
                     foreach ($options as $k) {
@@ -85,9 +99,17 @@
                     ?>
                 </select>
                 <br>
-                <input type="submit" value="Valider" />
+                <input class="btn btn-primary mt-3 w-100" type="submit" value="Valider" />
             </form>
-
+            </div>
 </body>
+<style>
+    #logout-btn {
+        top: 0;
+        right: 0;
+        position: absolute;
+        z-index: 20;
+    }
+</style>
 
 </html>

@@ -54,7 +54,7 @@
             notre passion !<br> Retrouvez nos plats à l'emporter à ces adresses :</p>
         </div>
         <div class="row m-0 p-1">
-          <div class="col-12 col-xl-6 my-2">
+          <div class="col-12 col-lg-6 my-2">
             <div class="row m-0">
               <div class="col-12 col-xl-7 order-1 order-xl-0">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d343.1640612419767!2d6.629429628803116!3d46.52171789889717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478c2e2de4c5885b%3A0x7beb84788ba49c91!2sTerrasse%20Jean-Monnet%2C%201003%20Lausanne!5e0!3m2!1sfr!2sch!4v1677100040049!5m2!1sfr!2sch" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -131,7 +131,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-xl-6 my-2">
+          <div class="col-12 col-lg-6 my-2">
             <div class="row m-0">
               <div class="col-12 col-xl-7 order-1 order-xl-1">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1372.7932241584897!2d6.5474288816146675!3d46.51629595243696!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478c30ddc65ce36b%3A0x6d8837cd83454dbb!2sRte%20de%20Vallaire%20100%2C%201024%20Ecublens!5e0!3m2!1sfr!2sch!4v1677101503260!5m2!1sfr!2sch" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -261,9 +261,19 @@
                   {  
                     $item = $menus[$i];
                     if (isset($item["description"])) {
-                      echo "<tr><td><span class='item'>". $item["name"]."</span><br><i>".$item["description"]."</i></td><td>".$item["price"]." CHF</td></tr>";
+                      echo '<tr><td><span>';
+                      echo $item['name']
+                      .'</span><br><i>'
+                      .$item['description']
+                      .'</i></td><td>'
+                      .$item['price']
+                      .' CHF</td></tr>';
                     } else {
-                      echo "<tr><td><span class='item'>". $item["name"]."</span></td><td>".$item["price"]." CHF</td></tr>";
+                      echo '<tr><td><span class="item">'
+                      . $item['name']
+                      .'</span></td><td>'
+                      .$item['price']
+                      .' CHF</td></tr>';
                     }
                   }
                 ?>
