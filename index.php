@@ -261,7 +261,7 @@
                   {  
                     $item = $menus[$i];
                     if (isset($item["description"])) {
-                      echo '<tr><td><span>';
+                      echo '<tr><td><span class="item">';
                       echo $item['name']
                       .'</span><br><i>'
                       .$item['description']
