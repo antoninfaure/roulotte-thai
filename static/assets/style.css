@@ -113,7 +113,11 @@ a, a:hover {
 #menu table td:nth-child(2) {
     text-align: center;
 }
-
+#menu table td:nth-child(3) {
+    text-align: right;
+    width: 1% ;
+    white-space:nowrap ;
+}
 .item {
     font-weight: 600;
 }

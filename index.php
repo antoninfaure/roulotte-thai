@@ -13,9 +13,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
   <!-- Bootstrap -->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Lato&family=Lato:wght@100;300;500;900&family=Pacifico:wght@100;300;400;500;900&family=Josefin+Sans&display=swap" rel="stylesheet">
@@ -221,33 +220,34 @@
       <div class="col-12 m-0 px-3 px-md-5 py-5 text-center dark-green-outline" id="menu">
         <h2>Carte</h2>
         <div class="container">
+          <form action="">
 
-
-          <p>Nous vous proposons une cuisine thaïlandaise de qualité, saine et variée :</p>
-          <div class="row">
-            <div class="mx-auto">
-              <ul class="text-left" style="list-style: inside;">
-                <li>plusieurs menus à choix (changement quotidien) à 11.-, servis en portions généreuses
-                </li>
-                <li>divers mets classiques et jus exotiques (disponibles quotidiennement)</li>
-                <li>un menu végétarien est
-                  proposé
-                  quotidiennement (les menus à base de nouilles peuvent également être servis
-                  végétariens)</li>
-              </ul>
+            <p>Nous vous proposons une cuisine thaïlandaise de qualité, saine et variée :</p>
+            <div class="row">
+              <div class="mx-auto">
+                <ul class="text-left" style="list-style: inside;">
+                  <li>plusieurs menus à choix (changement quotidien) à 11.-, servis en portions généreuses
+                  </li>
+                  <li>divers mets classiques et jus exotiques (disponibles quotidiennement)</li>
+                  <li>un menu végétarien est
+                    proposé
+                    quotidiennement (les menus à base de nouilles peuvent également être servis
+                    végétariens)</li>
+                </ul>
+              </div>
             </div>
-          </div>
-          <div class="col-12 p-3 my-3 m-0">
-            <h3>Menus du jour</h3>
-            <table class="text-left m-0 w-100">
-              <thead>
-                <tr>
-                  <td></td>
-                  <td>Prix</td>
-                </tr>
-              </thead>
-              <tbody>
-                <?php
+            <div class="col-12 p-3 my-3 m-0">
+              <h3>Menus du jour</h3>
+              <table class="text-start m-0 w-100">
+                <thead>
+                  <tr>
+                    <td></td>
+                    <td>Prix</td>
+                    <td></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
                   // Si fichier inexistant, exit
                   if (!file_exists("menujour.json")) exit;
 
@@ -257,120 +257,165 @@
                   if (!$jsonFile) exit;
 
                   $menus = json_decode($jsonFile, true);
-                  for($i=0; $i< count($menus); $i++)
-                  {  
+                  for ($i = 0; $i < count($menus); $i++) {
                     $item = $menus[$i];
                     if (isset($item["description"])) {
                       echo '<tr><td><span class="item">';
                       echo $item['name']
-                      .'</span><br><i>'
-                      .$item['description']
-                      .'</i></td><td>'
-                      .$item['price']
-                      .' CHF</td></tr>';
+                        . '</span><br><i>'
+                        . $item['description']
+                        . '</i></td><td>'
+                        . $item['price']
+                        . ' CHF</td><td><input class="btn-check" type="checkbox" id="btn-check-daily-' . $i . '" name="order[]" value="'
+                        . $item['name']
+                        . '"><label class="btn btn-outline-success" for="btn-check-daily-' . $i . '">Commander</label></td></tr>';
                     } else {
                       echo '<tr><td><span class="item">'
-                      . $item['name']
-                      .'</span></td><td>'
-                      .$item['price']
-                      .' CHF</td></tr>';
+                        . $item['name']
+                        . '</span></td><td>'
+                        . $item['price']
+                        . ' CHF</td><td><input class="btn-check" type="checkbox" id="btn-check-daily-' . $i . '" name="order[]" value="'
+                        . $item['name']
+                        . '"><label class="btn btn-outline-success" for="btn-check-daily-' . $i . '">Commander</label></td></tr>';
                     }
                   }
-                ?>
-              </tbody>
-            </table>
-          </div>
-          <div class="col-12 p-3 my-3 m-0">
-            <h3>Les spécialités</h3>
-            En plus des menus du jour, nous vous invitons à déguster ...
-            <table class="text-left m-0 w-100">
-              <thead>
-                <tr>
-                  <td></td>
-                  <td>Prix</td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <span class="item">Brochette de poulet satay, sauche cacahuètes</span><br><i>(1 pièce)</i>
-                  </td>
-                  <td>3 CHF</td>
-                </tr>
+                  ?>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-12 p-3 my-3 m-0">
+              <h3>Les spécialités</h3>
+              En plus des menus du jour, nous vous invitons à déguster ...
+              <table class="text-start m-0 w-100">
+                <thead>
+                  <tr>
+                    <td></td>
+                    <td>Prix</td>
+                    <td></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <span class="item">Brochette de poulet satay, sauche cacahuètes</span><br><i>(1 pièce)</i>
+                    </td>
+                    <td>3 CHF</td>
+                    <td>
+                      <input type="checkbox" class="btn-check" name="order[]" id="btn-check-spe-1" value="Brochette de poulet satay, sauche cacahuètes (1 pièce)">
+                      <label class="btn btn-outline-success" for="btn-check-spe-1">Commander</label>
+                    </td>
+                  </tr>
 
-                <tr>
-                  <td>
-                    <span class="item">Brochette de poulet satay, sauche cacahuètes</span><br><i>(3 pièces + riz)</i>
-                  </td>
-                  <td>11 CHF</td>
-                </tr>
-                <tr>
-                  <td>
-                    <span class="item">Rouleau de printemps croustillant</span><br><i>(1 pièce)</i>
-                  </td>
-                  <td>2.5 CHF</td>
-                </tr>
-                <tr>
-                  <td>
-                    <span class="item">Riz nature</span><br><i>(300 gr)</i>
-                  </td>
-                  <td>2.5 CHF</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                  <tr>
+                    <td>
+                      <span class="item">Brochette de poulet satay, sauche cacahuètes</span><br><i>(3 pièces + riz)</i>
+                    </td>
+                    <td>11 CHF</td>
+                    <td>
+                      <input type="checkbox" class="btn-check" name="order[]" id="btn-check-spe-2" value="Brochette de poulet satay, sauche cacahuètes (3 pièces + riz)">
+                      <label class="btn btn-outline-success" for="btn-check-spe-2">Commander</label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span class="item">Rouleau de printemps croustillant</span><br><i>(1 pièce)</i>
+                    </td>
+                    <td>2.5 CHF</td>
+                    <td>
+                      <input type="checkbox" class="btn-check" name="order[]" id="btn-check-spe-3" value="Rouleau de printemps croustillant (1 pièce)">
+                      <label class="btn btn-outline-success" for="btn-check-spe-3">Commander</label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span class="item">Riz nature</span><br><i>(300 gr)</i>
+                    </td>
+                    <td>2.5 CHF</td>
+                    <td>
+                      <input type="checkbox" class="btn-check" name="order[]" id="btn-check-spe-4" value="Riz nature (300g)">
+                      <label class="btn btn-outline-success" for="btn-check-spe-4">Commander</label>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-          <div class="col-12 p-3 my-3 m-0">
-            <h3>Les boissons</h3>
-            Pour accompagner vos menus ...
-            <table class="text-left m-0 w-100">
-              <thead>
-                <tr>
-                  <td></td>
-                  <td>Prix</td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <span class="item">Jus asiatiques (35cl)</span><br><i>Mangue, Litchi, Goyave, ...</i>
-                  </td>
-                  <td>2.5 CHF</td>
-                </tr>
-                <tr>
-                  <td>
-                    <span class="item">Volvic - 50cl</span><br><i>Non-gazeuse</i>
-                  </td>
-                  <td>2 CHF</td>
-                </tr>
-                <tr>
-                  <td>
-                    <span class="item">San Pellegrino - 50cl</span><br><i>Gazeuse</i>
-                  </td>
-                  <td>2.3 CHF</td>
-                </tr>
-                <tr>
-                  <td>
-                    <span class="item">Thé froid - 50cl</span><br><i>Pêche, Citron, ...</i>
-                  </td>
-                  <td>2.5 CHF</td>
-                </tr>
-                <tr>
-                  <td>
-                    <span class="item">Sodas - 45/50cl</span><br><i>Coca-Cola, Sinalco, ...</i>
-                  </td>
-                  <td>2.5 CHF</td>
-                </tr>
-                <tr>
-                  <td>
-                    <span class="item">Thé froid asiatique (oishi) - 40cl</span><br><i>Jasmin, Passion, Noir Citron, Miel
-                      Citron, Extrait de riz, ...</i>
-                  </td>
-                  <td>2.5 CHF</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+            <div class="col-12 p-3 my-3 m-0">
+              <h3>Les boissons</h3>
+              Pour accompagner vos menus ...
+              <table class="text-start m-0 w-100">
+                <thead>
+                  <tr>
+                    <td></td>
+                    <td>Prix</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <span class="item">Jus asiatiques (35cl)</span><br><i>Mangue, Litchi, Goyave, ...</i>
+                    </td>
+                    <td>2.5 CHF</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span class="item">Volvic - 50cl</span><br><i>Non-gazeuse</i>
+                    </td>
+                    <td>2 CHF</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span class="item">San Pellegrino - 50cl</span><br><i>Gazeuse</i>
+                    </td>
+                    <td>2.3 CHF</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span class="item">Thé froid - 50cl</span><br><i>Pêche, Citron, ...</i>
+                    </td>
+                    <td>2.5 CHF</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span class="item">Sodas - 45/50cl</span><br><i>Coca-Cola, Sinalco, ...</i>
+                    </td>
+                    <td>2.5 CHF</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span class="item">Thé froid asiatique (oishi) - 40cl</span><br><i>Jasmin, Passion, Noir Citron, Miel
+                        Citron, Extrait de riz, ...</i>
+                    </td>
+                    <td>2.5 CHF</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-11 col-lg-6 mx-auto text-center">
+
+              <div class="form-group my-2">
+                <label>Nom Prénom<small>*</small></label>
+                <input class="form-control" name="name" type="text" required/>
+              </div>
+              <div class="form-group my-2">
+                <label>Email<small>*</small></label>
+                <input class="form-control" name="email" type="email" required />
+              </div>
+              <div class="form-group my-2">
+                <label>N° de téléphone<small>*</small></label>
+                <input class="form-control" name="phone" type="tel" required />
+              </div>
+              <div class="form-group my-2">
+                <label>Commentaire</label>
+                <textarea class="form-control" name="message"></textarea>
+              </div>
+              <p class="text-start">
+              <small>(*) Obligatoire</small>
+                </p>
+              <button class="btn btn-danger btn-lg my-2" type="submit" name="submit">Envoyer la commande !</button>
+     
+            </div>
+          </form>
         </div>
       </div>
       <div class="col-12 m-0 px-3 px-md-5 py-5 text-center dark-green" id="about">
@@ -447,5 +492,35 @@
     </div>
   </footer>
 </body>
+<script>
+  $(function() {
+    $('form').submit(function() {
+      if ($("input[name='order[]']:checked").length < 1) {
+        alert("Veuillez sélectionner au moins un article")
+        return false
+      }
+      $.ajax({
+          type: 'POST',
+          url: 'postToGoogleSheet.php',
+          cache: false,
+          data: {
+            name: $(this).find('input[name="name"]').val(),
+            email: $(this).find('input[name="email"]').val(),
+            phone: $(this).find('input[name="phone"]').val(),
+            message: $(this).find('textarea[name="message"]').val(),
+            order: $("input[name='order[]']:checked").map(function() {
+              return this.value;
+            }).get().join()
+          }
+        }).done(function() {
+          alert("Commande passée !");
+        })
+        .fail(function() {
+          alert("Erreur lors de la commande");
+        })
+      return false;
+    });
+  })
+</script>
 
 </html>
