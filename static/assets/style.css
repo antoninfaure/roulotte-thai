@@ -41,6 +41,9 @@ a, a:hover {
     background-color: #002418;
     color: white;
 }
+.border-dark-green {
+    border-color: #002418;
+}
 
 /* Navbar */
 .navbar {
@@ -91,7 +94,7 @@ a, a:hover {
 
 /* Horaires */
 .horaires {
-    border: 2px solid white;
+    border: 2px solid #002418;
     padding: 10px;
     margin: 0 auto;
     text-align: center;
@@ -103,7 +106,7 @@ a, a:hover {
 
 /* Menu */
 #menu table tr {
-    border-bottom: 1px solid #002418;
+    border-bottom: 1px solid white;
 }
 
 #menu table td {

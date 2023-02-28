@@ -13,8 +13,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
   <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Lato&family=Lato:wght@100;300;500;900&family=Pacifico:wght@100;300;400;500;900&family=Josefin+Sans&display=swap" rel="stylesheet">
@@ -28,10 +29,10 @@
   <header class="col-12 p-0 m-0 text-center">
     <nav class="navbar dark-green m-0 justify-content-center">
       <ul class="nav d-flex justify-content-center text-center m-0">
-        <a class="nav-link m-2" href="#where-to-find-us">Où nous trouver</a>
         <a class="nav-link m-2" href="#menu">Carte</a>
         <a class="nav-link m-2" href="#about">A propos</a>
         <a class="nav-link m-2" href="#contact">Contact</a>
+        <a class="nav-link m-2" href="#where-to-find-us">Où nous trouver</a>
       </ul>
     </nav>
   </header>
@@ -46,7 +47,234 @@
         </section>
 
       </div>
-      <div class="col-12 m-0 px-3 px-md-5 py-5 text-center dark-green" id="where-to-find-us">
+      <div class="col-12 m-0 px-3 px-md-5 py-5 text-center dark-green" id="menu">
+        <h2>Carte</h2>
+        <div class="container">
+
+
+          <p>Nous vous proposons une cuisine thaïlandaise de qualité, saine et variée :</p>
+          <div class="row">
+            <div class="mx-auto">
+              <ul class="text-left" style="list-style: inside;">
+                <li>plusieurs menus à choix (changement quotidien) à 11.-, servis en portions généreuses
+                </li>
+                <li>divers mets classiques et jus exotiques (disponibles quotidiennement)</li>
+                <li>un menu végétarien est
+                  proposé
+                  quotidiennement (les menus à base de nouilles peuvent également être servis
+                  végétariens)</li>
+              </ul>
+            </div>
+          </div>
+		  <p>Les commandes sont à faire par email à l'adresse <a href="mailto:info@roulotte-thai.ch">info@roulotte-thai.ch</a>. <br>Il faut effectuer votre commande la veille du jour souhaité et venir chercher vos plats Route de Vallaire 100, à Ecublens.<br>À toutes fins utiles, il vous est possible de vous coordonner avec d'autres personnes en rejoignant le <a href="https://chat.whatsapp.com/E0MRnyO5DCZFnVB6D6qaLV" target="_blank">groupe WhatsApp</a> dédié à cela !</p>
+          <div class="col-12 p-3 my-3 m-0">
+            <h3>Nous vous servirons à Ecublens cette semaine le jeudi 2 et le vendredi 3 mars</h3>
+            <table class="text-left m-0 w-100">
+              <thead>
+                <tr>
+                  <td></td>
+                  <td>Prix</td>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                  // Si fichier inexistant, exit
+                  if (!file_exists("menujour.json")) exit;
+
+                  $jsonFile = file_get_contents('menujour.json', 'r');
+
+                  // Si erreur lors de l'ouverture du fichier, exit
+                  if (!$jsonFile) exit;
+
+                  $menus = json_decode($jsonFile, true);
+                  for($i=0; $i< count($menus); $i++)
+                  {  
+                    $item = $menus[$i];
+                    if (isset($item["description"])) {
+                      echo '<tr><td><span class="item">Plat '
+                      .($i+1)
+                      .' - ';
+                      echo $item['name']
+                      .'</span><br><i>'
+                      .$item['description']
+                      .'</i></td><td>'
+                      .$item['price']
+                      .' CHF</td></tr>';
+                    } else {
+                      echo '<tr><td><span class="item">Plat '
+                      .($i+1)
+                      .' - '
+                      . $item['name']
+                      .'</span></td><td>'
+                      .$item['price']
+                      .' CHF</td></tr>';
+                    }
+                  }
+                ?>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-12 p-3 my-3 m-0">
+            <h3>Les spécialités</h3>
+            En plus des menus du jour, nous vous invitons à déguster ...
+            <table class="text-left m-0 w-100">
+              <thead>
+                <tr>
+                  <td></td>
+                  <td>Prix</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <span class="item">Brochette de poulet satay, sauce cacahuètes</span><br><i>(1 pièce)</i>
+                  </td>
+                  <td>3 CHF</td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <span class="item">Brochette de poulet satay, sauce cacahuètes</span><br><i>(3 pièces + riz)</i>
+                  </td>
+                  <td>11 CHF</td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="item">Rouleau de printemps croustillant</span><br><i>(1 pièce)</i>
+                  </td>
+                  <td>2.5 CHF</td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="item">Riz nature</span><br><i>(300 gr)</i>
+                  </td>
+                  <td>2.5 CHF</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="col-12 p-3 my-3 m-0">
+            <h3>Les boissons</h3>
+            Pour accompagner vos menus ...
+            <table class="text-left m-0 w-100">
+              <thead>
+                <tr>
+                  <td></td>
+                  <td>Prix</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <span class="item">Jus asiatiques (35cl)</span><br><i>Mangue, Litchi, Goyave, ...</i>
+                  </td>
+                  <td>2.5 CHF</td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="item">Volvic - 50cl</span><br><i>Non-gazeuse</i>
+                  </td>
+                  <td>2 CHF</td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="item">San Pellegrino - 50cl</span><br><i>Gazeuse</i>
+                  </td>
+                  <td>2.3 CHF</td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="item">Thé froid - 50cl</span><br><i>Pêche, Citron, ...</i>
+                  </td>
+                  <td>2.5 CHF</td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="item">Sodas - 45/50cl</span><br><i>Coca-Cola, Sinalco, ...</i>
+                  </td>
+                  <td>2.5 CHF</td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="item">Thé froid asiatique (oishi) - 40cl</span><br><i>Jasmin, Passion, Noir Citron, Miel
+                      Citron, Extrait de riz, ...</i>
+                  </td>
+                  <td>2.5 CHF</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 m-0 px-3 px-md-5 py-5 text-center dark-green-outline" id="about">
+        <h2>A propos</h2>
+        <div class="container py-2">
+          <p>La roulotte Hong Thaï Rong est née à l'EPFL en 1999. Elle a beaucoup grandi depuis et a acquis
+            une
+            clientèle fidèle.</p>
+
+          <img class="img-fluid my-4" width="100%" src="./static/images/service.jpeg">
+
+          <p>Nous sommes actuellement à la recherche d'un nouveau lieu où servir nos plats au quotidien,
+            toutes
+            vos
+            remarques
+            et idées sont les bienvenues !<br>
+            N'hésitez pas à nous contacter à <a href="mailto:info@roulotte-thai.ch">info@roulotte-thai.ch</a> !</p>
+
+          <p>Toute l'équipe de la roulotte Hong Thaï Rung vous souhaite un bon appétit !</p>
+          <hr class="border-dark-green my-5">
+          <div>
+            <h4>Envie de nous aider ?</h4>
+            <p>Parlez-en autour de vous !
+              Le meilleur moyen de nous donner un coup de main est de nous aider à nous faire connaître !
+              À
+              toutes
+              fins
+              utiles, vous pouvez télécharger notre <a href="./static/docs/flyer-thai.pdf" target="_blank">flyer</a>.</p>
+          </div>
+          <hr class="border-dark-green my-5">
+          <div>
+            <h4>Prestations</h4>
+            <p>Pour toute question ou demande de participation à un événement, n'hésitez pas à nous
+              contacter
+              par
+              email à <a href="mailto:info@roulotte-thai.ch">info@roulotte-thai.ch</a></p>
+          </div>
+          <hr class="border-dark-green my-5">
+          <div>
+            <h4>Newsletter</h4>
+            <p>Stay tuned! Vous pouvez nous donner votre adresse email afin d'être tenu·e informé·e de
+              toutes
+              les
+              nouveautés
+              concernant nos activités en remplissant ce <a href="https://docs.google.com/forms/d/e/1FAIpQLSfQ7jVZC_ZW9TtxOXQX_VxVi6e6l8UPBHhC0IOPpn-cFGLp9w/viewform" target="_blank">formulaire</a>.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 m-0 px-3 px-md-5 py-5 text-center dark-green" id="contact">
+        <h2>Contact</h2>
+
+        <h6>Horaires</h6>
+        <p>Tous les jours, du lundi au vendredi, 11h - 14h30</p>
+
+        <h6>Paiements acceptés</h6>
+        <p>Cash, Twint (076 334 42 49)</p>
+
+        <h6>Téléphones</h6>
+        <p>076 334 42 49 <br>
+          078 627 42 49 (pour toutes questions administratives)</p>
+
+        <h6>Email</h6>
+        <p><a href="mailto:info@roulotte-thai.ch">info@roulotte-thai.ch</a></p>
+
+        <h6>Localisation</h6>
+        Route de Vallaire 100, 1024 Ecublens
+
+      </div>
+    </div>
+    <div class="col-12 m-0 px-3 px-md-5 py-5 text-center dark-green-outline" id="where-to-find-us">
         <h2>Où nous trouver ?</h2>
         <div class="col-12 p-3">
           <p>Suite à la cessation de notre activité à l'EPFL, nous continuons à vous servir et à partager
@@ -164,7 +392,7 @@
                               Mercredi
                             </th>
                             <td class="align-top p-2">
-                              11:00 - 14:30
+                              Fermé
                             </td>
                           </tr>
                           <tr>
@@ -204,287 +432,11 @@
                     </div>
                   </div>
                 </div>
-                <p class="mt-3">Sur précommande à faire la veille du jour de la récupération et un lien
-                  de
-                  commande sera
-                  disponible ici dès le 27 février.</p>
               </div>
             </div>
           </div>
         </div>
-        <p><span class="text-underline">PS :</span> L'offre spécifique à chaque jour sera affichée afin que vous puissiez choisir
-          les mets qui vous
-          plaisent le
-          plus.</p>
       </div>
-      <div class="col-12 m-0 px-3 px-md-5 py-5 text-center dark-green-outline" id="menu">
-        <h2>Carte</h2>
-        <div class="container">
-          <form action="">
-
-            <p>Nous vous proposons une cuisine thaïlandaise de qualité, saine et variée :</p>
-            <div class="row">
-              <div class="mx-auto">
-                <ul class="text-left" style="list-style: inside;">
-                  <li>plusieurs menus à choix (changement quotidien) à 11.-, servis en portions généreuses
-                  </li>
-                  <li>divers mets classiques et jus exotiques (disponibles quotidiennement)</li>
-                  <li>un menu végétarien est
-                    proposé
-                    quotidiennement (les menus à base de nouilles peuvent également être servis
-                    végétariens)</li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-12 p-3 my-3 m-0">
-              <h3>Menus du jour</h3>
-              <table class="text-start m-0 w-100">
-                <thead>
-                  <tr>
-                    <td></td>
-                    <td>Prix</td>
-                    <td></td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php
-                  // Si fichier inexistant, exit
-                  if (!file_exists("menujour.json")) exit;
-
-                  $jsonFile = file_get_contents('menujour.json', 'r');
-
-                  // Si erreur lors de l'ouverture du fichier, exit
-                  if (!$jsonFile) exit;
-
-                  $menus = json_decode($jsonFile, true);
-                  for ($i = 0; $i < count($menus); $i++) {
-                    $item = $menus[$i];
-                    if (isset($item["description"])) {
-                      echo '<tr><td><span class="item">';
-                      echo $item['name']
-                        . '</span><br><i>'
-                        . $item['description']
-                        . '</i></td><td>'
-                        . $item['price']
-                        . ' CHF</td><td><input class="btn-check" type="checkbox" id="btn-check-daily-' . $i . '" name="order[]" value="'
-                        . $item['name']
-                        . '"><label class="btn btn-outline-success" for="btn-check-daily-' . $i . '">Commander</label></td></tr>';
-                    } else {
-                      echo '<tr><td><span class="item">'
-                        . $item['name']
-                        . '</span></td><td>'
-                        . $item['price']
-                        . ' CHF</td><td><input class="btn-check" type="checkbox" id="btn-check-daily-' . $i . '" name="order[]" value="'
-                        . $item['name']
-                        . '"><label class="btn btn-outline-success" for="btn-check-daily-' . $i . '">Commander</label></td></tr>';
-                    }
-                  }
-                  ?>
-                </tbody>
-              </table>
-            </div>
-            <div class="col-12 p-3 my-3 m-0">
-              <h3>Les spécialités</h3>
-              En plus des menus du jour, nous vous invitons à déguster ...
-              <table class="text-start m-0 w-100">
-                <thead>
-                  <tr>
-                    <td></td>
-                    <td>Prix</td>
-                    <td></td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <span class="item">Brochette de poulet satay, sauche cacahuètes</span><br><i>(1 pièce)</i>
-                    </td>
-                    <td>3 CHF</td>
-                    <td>
-                      <input type="checkbox" class="btn-check" name="order[]" id="btn-check-spe-1" value="Brochette de poulet satay, sauche cacahuètes (1 pièce)">
-                      <label class="btn btn-outline-success" for="btn-check-spe-1">Commander</label>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>
-                      <span class="item">Brochette de poulet satay, sauche cacahuètes</span><br><i>(3 pièces + riz)</i>
-                    </td>
-                    <td>11 CHF</td>
-                    <td>
-                      <input type="checkbox" class="btn-check" name="order[]" id="btn-check-spe-2" value="Brochette de poulet satay, sauche cacahuètes (3 pièces + riz)">
-                      <label class="btn btn-outline-success" for="btn-check-spe-2">Commander</label>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <span class="item">Rouleau de printemps croustillant</span><br><i>(1 pièce)</i>
-                    </td>
-                    <td>2.5 CHF</td>
-                    <td>
-                      <input type="checkbox" class="btn-check" name="order[]" id="btn-check-spe-3" value="Rouleau de printemps croustillant (1 pièce)">
-                      <label class="btn btn-outline-success" for="btn-check-spe-3">Commander</label>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <span class="item">Riz nature</span><br><i>(300 gr)</i>
-                    </td>
-                    <td>2.5 CHF</td>
-                    <td>
-                      <input type="checkbox" class="btn-check" name="order[]" id="btn-check-spe-4" value="Riz nature (300g)">
-                      <label class="btn btn-outline-success" for="btn-check-spe-4">Commander</label>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="col-12 p-3 my-3 m-0">
-              <h3>Les boissons</h3>
-              Pour accompagner vos menus ...
-              <table class="text-start m-0 w-100">
-                <thead>
-                  <tr>
-                    <td></td>
-                    <td>Prix</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <span class="item">Jus asiatiques (35cl)</span><br><i>Mangue, Litchi, Goyave, ...</i>
-                    </td>
-                    <td>2.5 CHF</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <span class="item">Volvic - 50cl</span><br><i>Non-gazeuse</i>
-                    </td>
-                    <td>2 CHF</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <span class="item">San Pellegrino - 50cl</span><br><i>Gazeuse</i>
-                    </td>
-                    <td>2.3 CHF</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <span class="item">Thé froid - 50cl</span><br><i>Pêche, Citron, ...</i>
-                    </td>
-                    <td>2.5 CHF</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <span class="item">Sodas - 45/50cl</span><br><i>Coca-Cola, Sinalco, ...</i>
-                    </td>
-                    <td>2.5 CHF</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <span class="item">Thé froid asiatique (oishi) - 40cl</span><br><i>Jasmin, Passion, Noir Citron, Miel
-                        Citron, Extrait de riz, ...</i>
-                    </td>
-                    <td>2.5 CHF</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="col-11 col-lg-6 mx-auto text-center">
-
-              <div class="form-group my-2">
-                <label>Nom Prénom<small>*</small></label>
-                <input class="form-control" name="name" type="text" required/>
-              </div>
-              <div class="form-group my-2">
-                <label>Email<small>*</small></label>
-                <input class="form-control" name="email" type="email" required />
-              </div>
-              <div class="form-group my-2">
-                <label>N° de téléphone<small>*</small></label>
-                <input class="form-control" name="phone" type="tel" required />
-              </div>
-              <div class="form-group my-2">
-                <label>Commentaire</label>
-                <textarea class="form-control" name="message"></textarea>
-              </div>
-              <p class="text-start">
-              <small>(*) Obligatoire</small>
-                </p>
-              <button class="btn btn-danger btn-lg my-2" type="submit" name="submit">Envoyer la commande !</button>
-     
-            </div>
-          </form>
-        </div>
-      </div>
-      <div class="col-12 m-0 px-3 px-md-5 py-5 text-center dark-green" id="about">
-        <h2>A propos</h2>
-        <div class="container py-2">
-          <p>La roulotte Hong Thaï Rong est née à l'EPFL en 1999. Elle a beaucoup grandi depuis et a acquis
-            une
-            clientèle fidèle.</p>
-
-          <img class="img-fluid my-4" width="100%" src="./static/images/service.jpeg">
-
-          <p>Nous sommes actuellement à la recherche d'un nouveau lieu où servir nos plats au quotidien,
-            toutes
-            vos
-            remarques
-            et idées sont les bienvenues !<br>
-            N'hésitez pas à nous contacter à <a href="mailto:info@roulotte-thai.ch">info@roulotte-thai.ch</a> !</p>
-
-          <p>Toute l'équipe de la roulotte Hong Thaï Rung vous souhaite un bon appétit !</p>
-          <hr class="border-light my-5">
-          <div>
-            <h4>Envie de nous aider ?</h4>
-            <p>Parlez-en autour de vous !
-              Le meilleur moyen de nous donner un coup de main est de nous aider à nous faire connaître !
-              À
-              toutes
-              fins
-              utiles, vous pouvez télécharger notre <a href="./static/docs/flyer-thai.pdf" target="_blank">flyer</a>.</p>
-          </div>
-          <hr class="border-light my-5">
-          <div>
-            <h4>Prestations</h4>
-            <p>Pour toute question ou demande de participation à un événement, n'hésitez pas à nous
-              contacter
-              par
-              email à <a href="mailto:info@roulotte-thai.ch">info@roulotte-thai.ch</a></p>
-          </div>
-          <hr class="border-light my-5">
-          <div>
-            <h4>Newsletter</h4>
-            <p>Stay tuned! Vous pouvez nous donner votre adresse email afin d'être tenu·e informé·e de
-              toutes
-              les
-              nouveautés
-              concernant nos activités en remplissant ce <a href="https://docs.google.com/forms/d/e/1FAIpQLSfQ7jVZC_ZW9TtxOXQX_VxVi6e6l8UPBHhC0IOPpn-cFGLp9w/viewform" target="_blank">formulaire</a>.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 m-0 px-3 px-md-5 py-5 text-center dark-green-outline" id="contact">
-        <h2>Contact</h2>
-
-        <h6>Horaires</h6>
-        <p>Tous les jours, du lundi au vendredi, 11h - 14h30</p>
-
-        <h6>Paiements acceptés</h6>
-        <p>Cash, Twint (076 334 42 49)</p>
-
-        <h6>Téléphones</h6>
-        <p>076 334 42 49 <br>
-          078 627 42 49 (pour toutes questions administratives)</p>
-
-        <h6>Email</h6>
-        <p><a href="mailto:info@roulotte-thai.ch">info@roulotte-thai.ch</a></p>
-
-        <h6>Localisation</h6>
-        Route de Vallaire 100, 1024 Ecublens
-
-      </div>
-    </div>
   </main>
   <footer class="p-5">
     <div class="col-12 text-center">
@@ -492,35 +444,5 @@
     </div>
   </footer>
 </body>
-<script>
-  $(function() {
-    $('form').submit(function() {
-      if ($("input[name='order[]']:checked").length < 1) {
-        alert("Veuillez sélectionner au moins un article")
-        return false
-      }
-      $.ajax({
-          type: 'POST',
-          url: 'posttogooglesheet.php',
-          cache: false,
-          data: {
-            name: $(this).find('input[name="name"]').val(),
-            email: $(this).find('input[name="email"]').val(),
-            phone: $(this).find('input[name="phone"]').val(),
-            message: $(this).find('textarea[name="message"]').val(),
-            order: $("input[name='order[]']:checked").map(function() {
-              return this.value;
-            }).get().join()
-          }
-        }).done(function() {
-          alert("Commande passée !");
-        })
-        .fail(function() {
-          alert("Erreur lors de la commande");
-        })
-      return false;
-    });
-  })
-</script>
 
 </html>
