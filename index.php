@@ -501,7 +501,7 @@
       }
       $.ajax({
           type: 'POST',
-          url: 'postToGoogleSheet.php',
+          url: 'posttogooglesheet.php',
           cache: false,
           data: {
             name: $(this).find('input[name="name"]').val(),
